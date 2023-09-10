@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./img/jquery3-2-0.js"></script>
+    <script src="./mainscript-no-quantcast.js"></script>
+    <title>Bebo Rubik's Cube Simulator</title>
+    <meta name="description"
+        content="Play with the 3D Rubik's Cube simulator online. Press the scramble button and try to figure out the solution and practice." />
+    <meta property="og:title" content="Online Rubik's Cube Simulator" />
+    <meta property="og:description"
+        content="Play with the 3D Rubik's Cube simulator online. Press the scramble button and try to figure out the solution and practice." />
+    <link rel="canonical" href="https://ruwix.com/online-puzzle-simulators/" />
+    <meta property="og:url" content="https://ruwix.com/online-puzzle-simulators/" />
+    <meta property="og:image" content="https://ruwix.com/online-puzzle-simulators/images/og.jpg" />
+    <meta property="og:image:secure_url" content="https://ruwix.com/online-puzzle-simulators/images/og.jpg" />
+    <script src="./img/jquery3-2-0.js"></script>
+    <script charset="utf-8" src="./cuber.min.js"></script>
+    <link rel="stylesheet" href="./css/cube.css">
+    <meta property="og:site_name" content="Ruwix" />
+    <meta property="fb:admins" content="fricikoma" />
+    <meta property="fb:admins" content="1037899304" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="fb:app_id" content="355198271187833" />
+    <style>
+        #qc-cmp2-container {
+            display: none !important
+        }
+    </style>
+    <style>
+        #cubeControls {
+            position: absolute;
+            margin: auto;
+            top: 15px;
+            left: 5px;
+            z-index: 999;
+            right: 5px;
+            text-align: center
+        }
+
+        .tabs {
+            margin-bottom: 5px
+        }
+
+        .logo a {
+            margin-top: 5px
+        }
+
+        #sim3x3 {
+            position: relative;
+            padding: 5px 0 20px
+        }
+
+        #cubeControls a {
+            background: #3d81f6;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 3px 15px;
+            border-radius: 10px;
+            display: inline-block;
+            cursor: pointer;
+            font-weight: bold
+        }
+
+        #cubeControls a:hover {
+            background: #2e5089
+        }
+
+        #container {
+            width: 100%;
+            height: 800px;
+            background: #000;
+            background: -moz-radial-gradient(center, ellipse cover, #444 0%, #000000 90%);
+            background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #444), color-stop(90%, #000000));
+            background: -webkit-radial-gradient(center, ellipse cover, #444 0%, #000000 90%);
+            background: -o-radial-gradient(center, ellipse cover, #444 0%, #000000 90%);
+            background: -ms-radial-gradient(center, ellipse cover, #444 0%, #000000 90%);
+            background: radial-gradient(ellipse at center, #444 0%, #000000 90%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#000000', GradientType=1)
+        }
+
+        @media screen and (max-width:1200px) {
+            #container {
+                height: 500px
+            }
+        }
+
+        @media screen and (max-width:500px) {
+            #cubeControls a {
+                font-size: 16px;
+                padding: 1px 8px
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="./css/simulator.css" />
+</head>
+
+<body class="innerpage">
+    <div id="wrapper" class="hfeed">
+        <div class="wrapAll clearfix">
+
+            <div id="preventMouseHoverOnPageLoad">
+            </div>
+            <div class="mainsection">
+
+                <div class="article clearfix">
+                    <section id="content" role="main">
+                        <article>
+                            <section class="entry-content">
+                                <h1>Bebo Rubik's Cube Simulator</h1>
+                                <div id="sim3x3" class="showOnlyThisOnFullScreen">
+                                    <div id="cubeControls">
+                                        <a onclick="cube.undo();" title="Undo">&cularr;</a>
+                                        <a onclick="cube.redo();" title="Redo">&curarr;</a>
+                                        <a onclick="cube.shuffle(10);">Shuffle</a>
+                                        <a class="fullScreenTogglerButton">Scroll Lock</a>
+                                    </div>
+                                    <div id="container"></div>
+                                </div>
+
+
+
+
+                                <script>
+                                    function initCube3d() {
+                                        var useLockedControls = true,
+                                            controls = useLockedControls ? ERNO.Locked : ERNO.Freeform;
+                                        var ua = navigator.userAgent,
+                                            isIe = ua.indexOf('MSIE') > -1 || ua.indexOf('Trident/') > -1;
+                                        window.cube = new ERNO.Cube({
+                                            hideInvisibleFaces: true,
+                                            controls: controls,
+                                            renderer: isIe ? ERNO.renderers.IeCSS3D : null
+                                        });
+                                        var container = document.getElementById('container');
+                                        container.appendChild(cube.domElement);
+                                        if (controls === ERNO.Locked) {
+                                            var fixedOrientation = new THREE.Euler(Math.PI * 0.1, Math.PI * -0.25, 0);
+                                            cube.object3D.lookAt(cube.camera.position);
+                                            cube.rotation.x += fixedOrientation.x;
+                                            cube.rotation.y += fixedOrientation.y;
+                                            cube.rotation.z += fixedOrientation.z;
+                                        }
+                                    }
+                                    $(document).ready(function () {
+                                        initCube3d();
+                                        $('#readLink').addClass('active');
+                                    });
+                                </script>
+                            </section>
+                        </article>
+
+                    </section>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="popupBox">
+        <div id="popupBoxClose">x</div>
+        <div id="popupBoxInner">
+            <h2>Featured Articles:</h2>
+            <div id="popupBoxFeatured" class="clearfix">
+            </div>
+            <div>
+            </div>
+
+            <div>
+            </div>
+
+        </div>
+    </div>
+    <div id="popupShadow">
+    </div>
+    <a id="back2Top" title="Back to top" href="#">&#10148;</a>
+    <div id="myCookieConsent">
+    </div>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B8LNBGJLDC"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-B8LNBGJLDC');</script>
+</body>
+
+</html>
